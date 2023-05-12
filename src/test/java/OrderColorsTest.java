@@ -32,7 +32,7 @@ public class OrderColorsTest {
         orderClient = new OrderClient();
     }
     @Test
-    public void OrderColorsTest() {
+    public void orderColorsTest() {
         order = Order.
                 builder().
                 firstName("Роман").lastName("Костюк").

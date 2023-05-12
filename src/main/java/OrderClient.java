@@ -15,9 +15,10 @@ public class OrderClient extends RestClient{
                 .then();
     }
     public ValidatableResponse cancel(int track) {
+        String orderBody = "{\"track\":"+ track +"}";
         return given()
                 .spec(getSpecification())
-                .body("{\"track\":"+ track +"}")
+                .body(orderBody)
                 .when()
                 .put(ORDER_CANCEL_PATH)
                 .then();

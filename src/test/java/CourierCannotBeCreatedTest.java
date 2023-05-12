@@ -1,4 +1,5 @@
 import io.restassured.response.ValidatableResponse;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,8 @@ public class CourierCannotBeCreatedTest {
     private final Courier courier;
     private final int expectedStatusCode;
     private int actualStatusCode;
+    private static final String login = RandomStringUtils.randomAlphabetic(6);
+    private static final String password = RandomStringUtils.randomAlphabetic(8);
     public CourierCannotBeCreatedTest(Courier courier, int statusCode) {
         this.courier = courier;
         this.expectedStatusCode = statusCode;
@@ -21,9 +24,9 @@ public class CourierCannotBeCreatedTest {
     @Parameterized.Parameters(name = "{0} - {1}")
     public static Object[][] getTestData(){
         return new Object[][]{
-                {Courier.builder().login("courierWithoutPassword").build(), 400},
-                {Courier.builder().password("courierWithoutLogin").build(), 400},
-                {Courier.builder().login("courierPassword322").password("courierLogin").build(), 201},
+                {Courier.builder().login(login).build(), 400},
+                {Courier.builder().password(password).build(), 400},
+                {Courier.builder().login(login).password(password).build(), 201},
         };
     }
     @Before
@@ -31,7 +34,7 @@ public class CourierCannotBeCreatedTest {
         courierClient = new CourierClient();
     }
     @Test
-    public void CourierCannotBeCreatedWithoutAnyRequiredField() {
+    public void courierCannotBeCreatedWithoutAnyRequiredField() {
         ValidatableResponse createResponse = courierClient.create(courier);
 
         actualStatusCode = createResponse.extract().statusCode();

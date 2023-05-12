@@ -1,4 +1,5 @@
 import io.restassured.response.ValidatableResponse;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,10 +14,13 @@ public class CourierAuthorizationTest {
     @Before
     public void setUp(){
         courierClient = new CourierClient();
+        final String login = RandomStringUtils.randomAlphabetic(6);
+        final String password = RandomStringUtils.randomAlphabetic(8);
+        final String firstName = RandomStringUtils.randomAlphabetic(4);
         courier = Courier.builder()
-                .login("roma32244")
-                .password("roma3222")
-                .firstName("Roman")
+                .login(login)
+                .password(password)
+                .firstName(firstName)
                 .build();
         courierClient.create(courier);
     }
